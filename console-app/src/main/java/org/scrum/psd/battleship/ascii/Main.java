@@ -61,7 +61,8 @@ public class Main {
             console.println("Player, it's your turn");
             console.println("Enter coordinates for your shot :");
             Position position = parsePosition(scanner.next());
-            boolean isHit = GameController.checkIsHit(enemyFleet, position);
+            Ship shipTarget = GameController.checkIsHit(enemyFleet, position);
+            boolean isHit = (shipTarget != null);
             if (isHit) {
                 beep();
 
@@ -73,12 +74,15 @@ public class Main {
                 console.println("            -   (\\- |  \\ /  |  /)  -");
                 console.println("                 -\\  \\     /  /-");
                 console.println("                   \\  \\   /  /");
+
+                if (shipTarget.isShink()) console.println(String.format("YEACHHHHHHH: Enemy's %s was Sink", shipTarget.getName()));
             }
 
             console.println(isHit ? "Yeah ! Nice hit !" : "Miss");
 
             position = getRandomPosition();
-            isHit = GameController.checkIsHit(myFleet, position);
+            shipTarget = GameController.checkIsHit(myFleet, position);
+            isHit = (shipTarget != null);
             console.println("");
             console.println(String.format("Computer shoot in %s%s and %s", position.getColumn(), position.getRow(), isHit ? "hit your ship !" : "miss"));
             if (isHit) {
@@ -93,6 +97,7 @@ public class Main {
                 console.println("                 -\\  \\     /  /-");
                 console.println("                   \\  \\   /  /");
 
+                if (shipTarget.isShink()) console.println(String.format("OHNNOOOOOOOO: Your %s was Sink", shipTarget.getName()));
             }
         } while (true);
     }

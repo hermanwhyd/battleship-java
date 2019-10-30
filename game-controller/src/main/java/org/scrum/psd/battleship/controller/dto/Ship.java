@@ -21,6 +21,17 @@ public class Ship {
         this.size = size;
     }
 
+    /**
+     * Get Ship status was Sink or Not yet
+     * @return
+     */
+    public Boolean isShink() {
+        Boolean result = Boolean.TRUE;
+        for(Position p : positions)
+            if (!p.isHitted()) result = Boolean.FALSE;
+        return result;
+    }
+
     public Ship(String name, int size, List<Position> positions) {
         this(name, size);
 
