@@ -61,7 +61,13 @@ public class Main {
             console.println("Player, it's your turn");
             console.println("Enter coordinates for your shot :");
             Position position = parsePosition(scanner.next());
-            Ship shipTarget = GameController.checkIsHit(enemyFleet, position);
+            Ship shipTarget = null;
+
+            if (!position.isValidPosition())
+                console.println("Masukin koordinate yang valid ya!");
+            else
+                shipTarget = GameController.checkIsHit(enemyFleet, position);
+
             boolean isHit = (shipTarget != null);
             if (isHit) {
                 beep();
@@ -75,7 +81,10 @@ public class Main {
                 console.println("                 -\\  \\     /  /-");
                 console.println("                   \\  \\   /  /");
 
-                if (shipTarget.isShink()) console.println(String.format("YEACHHHHHHH: Enemy's %s was Sink", shipTarget.getName()));
+                if (shipTarget.isShink()) {
+                    console.setForegroundColor(Ansi.FColor.BLUE);
+                    console.println(String.format("YEACHHHHHHH: Enemy's %s was Sink", shipTarget.getName()));
+                }
             }
 
             console.println(isHit ? "Yeah ! Nice hit !" : "Miss");
@@ -97,7 +106,10 @@ public class Main {
                 console.println("                 -\\  \\     /  /-");
                 console.println("                   \\  \\   /  /");
 
-                if (shipTarget.isShink()) console.println(String.format("OHNNOOOOOOOO: Your %s was Sink", shipTarget.getName()));
+                if (shipTarget.isShink()) {
+                    console.setForegroundColor(Ansi.FColor.RED);
+                    console.println(String.format("OHNOOOOOOO Your %s was Sink", shipTarget.getName()));
+                }
             }
         } while (true);
     }
@@ -134,16 +146,43 @@ public class Main {
 
         console.println("Please position your fleet (Game board has size from A to H and 1 to 8) :");
 
-        for (Ship ship : myFleet) {
+//        for (Ship ship : myFleet) {
+            Ship ship = myFleet.get(4);
             console.println("");
             console.println(String.format("Please enter the positions for the %s (size: %s)", ship.getName(), ship.getSize()));
             for (int i = 1; i <= ship.getSize(); i++) {
                 console.println(String.format("Enter position %s of %s (i.e A3):", i, ship.getSize()));
 
                 String positionInput = scanner.next();
-                ship.addPosition(positionInput);
+                Position position = parsePosition(positionInput);
+                if (!position.isValidPosition())
+                    console.println("Masukin koordinate yang valid ya!");
+                else
+                    ship.addPosition(position);
             }
-        }
+//        }
+
+        myFleet.get(0).getPositions().add(new Position(Letter.B, 4));
+        myFleet.get(0).getPositions().add(new Position(Letter.B, 5));
+        myFleet.get(0).getPositions().add(new Position(Letter.B, 6));
+        myFleet.get(0).getPositions().add(new Position(Letter.B, 7));
+        myFleet.get(0).getPositions().add(new Position(Letter.B, 8));
+
+        myFleet.get(1).getPositions().add(new Position(Letter.E, 6));
+        myFleet.get(1).getPositions().add(new Position(Letter.E, 7));
+        myFleet.get(1).getPositions().add(new Position(Letter.E, 8));
+        myFleet.get(1).getPositions().add(new Position(Letter.E, 9));
+
+        myFleet.get(2).getPositions().add(new Position(Letter.A, 3));
+        myFleet.get(2).getPositions().add(new Position(Letter.B, 3));
+        myFleet.get(2).getPositions().add(new Position(Letter.C, 3));
+
+        myFleet.get(3).getPositions().add(new Position(Letter.F, 8));
+        myFleet.get(3).getPositions().add(new Position(Letter.G, 8));
+        myFleet.get(3).getPositions().add(new Position(Letter.H, 8));
+
+        myFleet.get(4).getPositions().add(new Position(Letter.C, 5));
+        myFleet.get(4).getPositions().add(new Position(Letter.C, 6));
     }
 
     private static void InitializeEnemyFleet() {

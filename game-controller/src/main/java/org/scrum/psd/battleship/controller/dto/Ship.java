@@ -44,6 +44,14 @@ public class Ship {
         this.color = color;
     }
 
+    public void addPosition(Position pos) {
+        if (positions == null) {
+            positions = new ArrayList<>();
+        }
+
+        positions.add(pos);
+    }
+
     public void addPosition(String input) {
         if (positions == null) {
             positions = new ArrayList<>();

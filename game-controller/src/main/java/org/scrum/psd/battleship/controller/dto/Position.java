@@ -21,6 +21,14 @@ public class Position {
         return hitted;
     }
 
+    public Boolean isValidPosition() {
+        Boolean result = Boolean.TRUE;
+        if (row < 0 || row > 8) return Boolean.FALSE;
+        if (column.ordinal() > 8) return Boolean.FALSE;
+
+        return result;
+    }
+
     public void setHitted() {
         hitted = Boolean.TRUE;
     }
