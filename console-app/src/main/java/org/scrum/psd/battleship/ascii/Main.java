@@ -47,7 +47,7 @@ public class Main {
 
             boolean isHit = (shipTarget != null);
             if (isHit) {
-                beep();
+                ConsoleOut.beep();
 
                 // print boom to me
                 ConsoleOut.boom("enemy");
@@ -66,7 +66,7 @@ public class Main {
             console.println("");
             console.println(String.format("Computer shoot in %s%s and %s", position.getColumn(), position.getRow(), isHit ? "hit your ship !" : "miss"));
             if (isHit) {
-                beep();
+                ConsoleOut.beep();
 
                 // print boom to me
                 ConsoleOut.boom("me");
@@ -77,10 +77,6 @@ public class Main {
                 }
             }
         } while (true);
-    }
-
-    private static void beep() {
-        console.print("\007");
     }
 
     protected static Position parsePosition(String input) {

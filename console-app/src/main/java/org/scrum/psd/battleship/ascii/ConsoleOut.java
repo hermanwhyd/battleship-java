@@ -55,4 +55,8 @@ public class ConsoleOut {
         console.println("                 -\\  \\     /  /-");
         console.println("                   \\  \\   /  /");
     }
+
+    public static void beep() {
+        console.print("\007");
+    }
 }
