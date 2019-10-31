@@ -19,22 +19,8 @@ public class Main {
     public static void main(String[] args) {
         console = new ColoredPrinter.Builder(1, false).build();
 
-        console.setForegroundColor(Ansi.FColor.MAGENTA);
-        console.println("                                     |__");
-        console.println("                                     |\\/");
-        console.println("                                     ---");
-        console.println("                                     / | [");
-        console.println("                              !      | |||");
-        console.println("                            _/|     _/|-++'");
-        console.println("                        +  +--|    |--|--|_ |-");
-        console.println("                     { /|__|  |/\\__|  |--- |||__/");
-        console.println("                    +---------------___[}-_===_.'____                 /\\");
-        console.println("                ____`-' ||___-{]_| _[}-  |     |_[___\\==--            \\/   _");
-        console.println(" __..._____--==/___]_|__|_____________________________[___\\==--____,------' .7");
-        console.println("|                        Welcome to Battleship                         BB-61/");
-        console.println(" \\_________________________________________________________________________|");
-        console.println("");
-        console.clear();
+        // print kapal
+        ConsoleOut.kapal();
 
         InitializeGame();
 
@@ -44,17 +30,8 @@ public class Main {
     private static void StartGame() {
         Scanner scanner = new Scanner(System.in);
 
-        console.print("\033[2J\033[;H");
-        console.println("                  __");
-        console.println("                 /  \\");
-        console.println("           .-.  |    |");
-        console.println("   *    _.-'  \\  \\__/");
-        console.println("    \\.-'       \\");
-        console.println("   /          _/");
-        console.println("  |      _  /\" \"");
-        console.println("  |     /_\'");
-        console.println("   \\    \\_/");
-        console.println("    \" \"\" \"\" \"\" \"");
+        // print meriam
+        ConsoleOut.meriam();
 
         do {
             console.println("");
@@ -72,14 +49,8 @@ public class Main {
             if (isHit) {
                 beep();
 
-                console.println("                \\         .  ./");
-                console.println("              \\      .:\" \";'.:..\" \"   /");
-                console.println("                  (M^^.^~~:.'\" \").");
-                console.println("            -   (/  .    . . \\ \\)  -");
-                console.println("               ((| :. ~ ^  :. .|))");
-                console.println("            -   (\\- |  \\ /  |  /)  -");
-                console.println("                 -\\  \\     /  /-");
-                console.println("                   \\  \\   /  /");
+                // print boom to me
+                ConsoleOut.boom("enemy");
 
                 if (shipTarget.isShink()) {
                     console.setForegroundColor(Ansi.FColor.BLUE);
@@ -97,14 +68,8 @@ public class Main {
             if (isHit) {
                 beep();
 
-                console.println("                \\         .  ./");
-                console.println("              \\      .:\" \";'.:..\" \"   /");
-                console.println("                  (M^^.^~~:.'\" \").");
-                console.println("            -   (/  .    . . \\ \\)  -");
-                console.println("               ((| :. ~ ^  :. .|))");
-                console.println("            -   (\\- |  \\ /  |  /)  -");
-                console.println("                 -\\  \\     /  /-");
-                console.println("                   \\  \\   /  /");
+                // print boom to me
+                ConsoleOut.boom("me");
 
                 if (shipTarget.isShink()) {
                     console.setForegroundColor(Ansi.FColor.RED);
