@@ -35,7 +35,7 @@ public class GameController {
 //                new Ship("Aircraft Carrier", 5, Color.CADET_BLUE),
 //                new Ship("Battleship", 4, Color.RED),
 //                new Ship("Submarine", 3, Color.CHARTREUSE),
-                new Ship("Destroyer", 3, Color.YELLOW),
+//                new Ship("Destroyer", 3, Color.YELLOW),
                 new Ship("Patrol Boat", 2, Color.ORANGE));
     }
 

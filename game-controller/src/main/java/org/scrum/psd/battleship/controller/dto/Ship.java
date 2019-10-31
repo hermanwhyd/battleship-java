@@ -27,8 +27,7 @@ public class Ship {
      */
     public Boolean isShink() {
         Boolean result = Boolean.TRUE;
-        for(Position p : positions)
-            if (!p.isHitted()) result = Boolean.FALSE;
+        for(Position p : positions) if (!p.isHitted()) result = Boolean.FALSE;
         return result;
     }
 

@@ -28,7 +28,7 @@ public class Main {
 
         InitializeGame();
 
-        boolean playAgain = false;
+        boolean playAgain;
         do {
             StartGame();
             console.println("Do you want to play again? [Y/N]");
@@ -69,6 +69,7 @@ public class Main {
                         console.println(String.format("HOUREEEEEE: Enemy's %s was sank", shipTarget.getName()));
 
                         for (Ship ship : enemyFleet) {
+                            console.println(String.format("%s was %s", ship.getName(), ship.isShink().toString()));
                             if (!ship.isShink()) isAllEnemisSink = false;
                         }
 
@@ -97,6 +98,7 @@ public class Main {
                         console.println(String.format("OH NOOOOOOO Your %s was sank", shipTarget.getName()));
 
                         for (Ship ship : myFleet) {
+                            console.println(String.format("%s was %s", ship.getName(), ship.isShink().toString()));
                             if (!ship.isShink()) isAllYourShipSink = false;
                         }
 
@@ -175,14 +177,14 @@ public class Main {
                         ship.setUpPosition(position, arah);
                     }
 
-                    ConsoleOut.print(ship.getName() + " position: " + ship.getPositions());
-
                     shipValid = GameController.isShipValid(ship);
                     if (!shipValid) {
-                        console.println("Ship position is over outside of the Game Board!");
+                        ConsoleOut.print(String.format("%s position %s ---> Ship position is Over outside!", ship.getName(), ship.getPositions()));
+                    } else {
+                        ConsoleOut.print(String.format("%s position %s", ship.getName(), ship.getPositions()));
                     }
                 } catch (Exception ex) {
-                    console.println("Please enter a valid position (Game board has size from A to H and 1 to 8) e.g. A1");
+                    console.println("Please enter a valid position (Game board has size from A to H and 1 to 8) or valid direction (H/V) e.g. A1");
                 }
             } while (!shipValid);
         }
@@ -205,12 +207,12 @@ public class Main {
 //        enemyFleet.get(2).getPositions().add(new Position(Letter.A, 3));
 //        enemyFleet.get(2).getPositions().add(new Position(Letter.B, 3));
 //        enemyFleet.get(2).getPositions().add(new Position(Letter.C, 3));
+//
+//        enemyFleet.get(0).getPositions().add(new Position(Letter.D, 1));
+//        enemyFleet.get(0).getPositions().add(new Position(Letter.D, 2));
+//        enemyFleet.get(0).getPositions().add(new Position(Letter.D, 3));
 
-        enemyFleet.get(0).getPositions().add(new Position(Letter.D, 1));
-        enemyFleet.get(0).getPositions().add(new Position(Letter.D, 2));
-        enemyFleet.get(0).getPositions().add(new Position(Letter.D, 3));
-
-        enemyFleet.get(1).getPositions().add(new Position(Letter.C, 5));
-        enemyFleet.get(1).getPositions().add(new Position(Letter.C, 6));
+        enemyFleet.get(0).getPositions().add(new Position(Letter.C, 5));
+        enemyFleet.get(0).getPositions().add(new Position(Letter.C, 6));
     }
 }
