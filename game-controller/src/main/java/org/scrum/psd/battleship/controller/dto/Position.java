@@ -1,5 +1,7 @@
 package org.scrum.psd.battleship.controller.dto;
 
+import org.scrum.psd.battleship.controller.GameController;
+
 public class Position {
     private Letter column;
     private int row;
@@ -23,8 +25,8 @@ public class Position {
 
     public Boolean isValidPosition() {
         Boolean result = Boolean.TRUE;
-        if (row < 0 || row > 8) return Boolean.FALSE;
-        if (column.ordinal() > 8) return Boolean.FALSE;
+        if (row < 0 || row > GameController.gameBoardField) return Boolean.FALSE;
+        if (column.ordinal() > GameController.gameBoardField) return Boolean.FALSE;
 
         return result;
     }
@@ -61,5 +63,10 @@ public class Position {
         }
 
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return column.name() + row;
     }
 }

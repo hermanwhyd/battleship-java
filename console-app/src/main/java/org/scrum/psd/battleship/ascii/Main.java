@@ -3,6 +3,7 @@ package org.scrum.psd.battleship.ascii;
 import com.diogonunes.jcdp.color.ColoredPrinter;
 import com.diogonunes.jcdp.color.api.Ansi;
 import org.scrum.psd.battleship.controller.GameController;
+import org.scrum.psd.battleship.controller.dto.Direction;
 import org.scrum.psd.battleship.controller.dto.Letter;
 import org.scrum.psd.battleship.controller.dto.Position;
 import org.scrum.psd.battleship.controller.dto.Ship;
@@ -107,43 +108,33 @@ public class Main {
 
         console.println("Please position your fleet (Game board has size from A to H and 1 to 8) :");
 
-//        for (Ship ship : myFleet) {
-            Ship ship = myFleet.get(4);
-            console.println("");
-            console.println(String.format("Please enter the positions for the %s (size: %s)", ship.getName(), ship.getSize()));
-            for (int i = 1; i <= ship.getSize(); i++) {
-                console.println(String.format("Enter position %s of %s (i.e A3):", i, ship.getSize()));
-
+        for (Ship ship : myFleet) {
+            do {
+                console.println("");
+                console.println(String.format("Please enter the head positions for the %s (size: %s)", ship.getName(), ship.getSize()));
+                console.println(String.format("Enter Head Position (i.e A3):"));
                 String positionInput = scanner.next();
                 Position position = parsePosition(positionInput);
-                if (!position.isValidPosition())
-                    console.println("Masukin koordinate yang valid ya!");
-                else
-                    ship.addPosition(position);
-            }
-//        }
 
-        myFleet.get(0).getPositions().add(new Position(Letter.B, 4));
-        myFleet.get(0).getPositions().add(new Position(Letter.B, 5));
-        myFleet.get(0).getPositions().add(new Position(Letter.B, 6));
-        myFleet.get(0).getPositions().add(new Position(Letter.B, 7));
-        myFleet.get(0).getPositions().add(new Position(Letter.B, 8));
+                if (position.isValidPosition()) {
+                    console.println("");
+                    console.println(String.format("Please enter the Position Direction for the %s (size: %s) - [H]orizontal / [V]ertical", ship.getName(), ship.getSize()));
+                    console.println(String.format("Enter direction (H/V):", ship.getSize()));
+                    String arahInput = scanner.next();
+                    Direction arah = Direction.valueOf(arahInput);
+                    ship.setUpPosition(position, arah);
+                }
 
-        myFleet.get(1).getPositions().add(new Position(Letter.E, 6));
-        myFleet.get(1).getPositions().add(new Position(Letter.E, 7));
-        myFleet.get(1).getPositions().add(new Position(Letter.E, 8));
-        myFleet.get(1).getPositions().add(new Position(Letter.E, 9));
+                ConsoleOut.print(ship.getPositions());
 
-        myFleet.get(2).getPositions().add(new Position(Letter.A, 3));
-        myFleet.get(2).getPositions().add(new Position(Letter.B, 3));
-        myFleet.get(2).getPositions().add(new Position(Letter.C, 3));
+                if (!GameController.isShipValid(ship)) {
+                    console.println("Ship position is over outside of the Game Board!");
+                }
 
-        myFleet.get(3).getPositions().add(new Position(Letter.F, 8));
-        myFleet.get(3).getPositions().add(new Position(Letter.G, 8));
-        myFleet.get(3).getPositions().add(new Position(Letter.H, 8));
+            } while (!GameController.isShipValid(ship));
 
-        myFleet.get(4).getPositions().add(new Position(Letter.C, 5));
-        myFleet.get(4).getPositions().add(new Position(Letter.C, 6));
+        }
+
     }
 
     private static void InitializeEnemyFleet() {

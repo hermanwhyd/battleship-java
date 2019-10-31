@@ -1,9 +1,6 @@
 package org.scrum.psd.battleship.controller;
 
-import org.scrum.psd.battleship.controller.dto.Color;
-import org.scrum.psd.battleship.controller.dto.Letter;
-import org.scrum.psd.battleship.controller.dto.Position;
-import org.scrum.psd.battleship.controller.dto.Ship;
+import org.scrum.psd.battleship.controller.dto.*;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -11,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 public class GameController {
+    public static int gameBoardField = 8;
     public static Ship checkIsHit(Collection<Ship> ships, Position shot) {
         if (ships == null) {
             throw new IllegalArgumentException("ships is null");
@@ -42,8 +40,13 @@ public class GameController {
     }
 
     public static boolean isShipValid(Ship ship) {
-        boolean result = false;
-        return result;
+        Position head = ship.getPositions().get(0);
+        Position tail = ship.getPositions().get(ship.getPositions().size() - 1);
+
+        // jika depan & belakang dalam koridor aman
+        if (head.isValidPosition() && tail.isValidPosition()) return true;
+
+        return true;
     }
 
     public static Position getRandomPosition(int size) {

@@ -59,4 +59,8 @@ public class ConsoleOut {
     public static void beep() {
         console.print("\007");
     }
+
+    public static void print(Object o) {
+        console.println(o);
+    }
 }

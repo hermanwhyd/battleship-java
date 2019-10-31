@@ -63,7 +63,31 @@ public class Ship {
         positions.add(new Position(letter, number));
     }
 
-    // TODO: property change listener implementieren
+    public void setUpPosition(Position headPosition, Direction direction) {
+        positions = positions = new ArrayList<>();
+        positions.add(headPosition);
+
+        for(int i = 1; i<this.size; i++) {
+            if (direction.equals(Direction.H)) {
+                positions.add(new Position(Letter.values()[headPosition.getColumn().ordinal() + i] ,headPosition.getRow()));
+            } else {
+                positions.add(new Position(headPosition.getColumn(), headPosition.getRow() + i));
+            }
+        }
+
+    }
+
+//    public String printPosition() {
+//        StringBuilder sb = new StringBuilder();
+//        if (positions != null) {
+//            positions.forEach(position -> {
+//                sb.append(positions.toString());
+//                sb.append("\n");
+//            });
+//        }
+//
+//        return sb.toString();
+//    }
 
     public boolean isPlaced() {
         return isPlaced;
