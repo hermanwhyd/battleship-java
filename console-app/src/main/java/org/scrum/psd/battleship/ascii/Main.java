@@ -17,6 +17,7 @@ public class Main {
     private static List<Ship> myFleet;
     private static List<Ship> enemyFleet;
     private static ColoredPrinter console;
+    private static List<Position> listHitted = new ArrayList<>();
 
     public static void main(String[] args) {
         console = new ColoredPrinter.Builder(1, false).build();
@@ -31,7 +32,8 @@ public class Main {
 
     private static void StartGame() {
         Scanner scanner = new Scanner(System.in);
-
+    	
+        
         // print meriam
         ConsoleOut.meriam();
 
@@ -110,20 +112,19 @@ public class Main {
     }
 
     private static Position getRandomPosition() {
-    	List<Position> listHitted = new ArrayList<>();
-    	
-        int rows = 8;
+    	 int rows = 8;
         int lines = 8;
         Random random = new Random();
         Letter letter = Letter.values()[random.nextInt(lines)];
         int number = random.nextInt(rows);
         Position position = new Position(letter, number);
+        
         if(listHitted.contains(position)) 
         	position=getRandomPosition();
         else
         	listHitted.add(position);
         
-        console.println(position);
+        console.println(listHitted.add(position));
         return position;
     }
 
