@@ -68,11 +68,11 @@ public class Main {
                         console.setForegroundColor(Ansi.FColor.BLUE);
                         console.println(String.format("HOUREEEEEE: Enemy's %s was sank", shipTarget.getName()));
 
-                        for (Ship ship : myFleet) {
-                            if (!ship.isShink()) isAllYourShipSink = false;
+                        for (Ship ship : enemyFleet) {
+                            if (!ship.isShink()) isAllEnemisSink = false;
                         }
 
-                        if (isAllYourShipSink) {
+                        if (isAllEnemisSink) {
                             console.println("All enemy's ships was sank!");
                             isEnd = true;
                         }
@@ -97,10 +97,10 @@ public class Main {
                         console.println(String.format("OH NOOOOOOO Your %s was sank", shipTarget.getName()));
 
                         for (Ship ship : myFleet) {
-                            if (!ship.isShink()) isAllEnemisSink = false;
+                            if (!ship.isShink()) isAllYourShipSink = false;
                         }
 
-                        if (isAllEnemisSink) {
+                        if (isAllYourShipSink) {
                             console.println("All your ships was sank!");
                             isEnd = true;
                         }
@@ -175,7 +175,7 @@ public class Main {
                         ship.setUpPosition(position, arah);
                     }
 
-                    ConsoleOut.print(ship.getPositions());
+                    ConsoleOut.print(ship.getName() + " position: " + ship.getPositions());
 
                     shipValid = GameController.isShipValid(ship);
                     if (!shipValid) {
@@ -186,7 +186,6 @@ public class Main {
                 }
             } while (!shipValid);
         }
-
     }
 
     private static void InitializeEnemyFleet() {
@@ -207,9 +206,9 @@ public class Main {
 //        enemyFleet.get(2).getPositions().add(new Position(Letter.B, 3));
 //        enemyFleet.get(2).getPositions().add(new Position(Letter.C, 3));
 
-        enemyFleet.get(0).getPositions().add(new Position(Letter.F, 8));
-        enemyFleet.get(0).getPositions().add(new Position(Letter.G, 8));
-        enemyFleet.get(0).getPositions().add(new Position(Letter.H, 8));
+        enemyFleet.get(0).getPositions().add(new Position(Letter.D, 1));
+        enemyFleet.get(0).getPositions().add(new Position(Letter.D, 2));
+        enemyFleet.get(0).getPositions().add(new Position(Letter.D, 3));
 
         enemyFleet.get(1).getPositions().add(new Position(Letter.C, 5));
         enemyFleet.get(1).getPositions().add(new Position(Letter.C, 6));
