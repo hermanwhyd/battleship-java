@@ -8,6 +8,7 @@ import org.scrum.psd.battleship.controller.dto.Letter;
 import org.scrum.psd.battleship.controller.dto.Position;
 import org.scrum.psd.battleship.controller.dto.Ship;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -87,12 +88,20 @@ public class Main {
     }
 
     private static Position getRandomPosition() {
+    	List<Position> listHitted = new ArrayList<>();
+    	
         int rows = 8;
         int lines = 8;
         Random random = new Random();
         Letter letter = Letter.values()[random.nextInt(lines)];
         int number = random.nextInt(rows);
         Position position = new Position(letter, number);
+        if(listHitted.contains(position)) 
+        	position=getRandomPosition();
+        else
+        	listHitted.add(position);
+        
+        console.println(position);
         return position;
     }
 
