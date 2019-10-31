@@ -39,44 +39,66 @@ public class Main {
             console.println("");
             console.println("Player, it's your turn");
             console.println("Enter coordinates for your shot :");
-            Position position = parsePosition(scanner.next());
-            Ship shipTarget = null;
+            try {
+                Position position = parsePosition(scanner.next());
+                Ship shipTarget = null;
 
-            if (!position.isValidPosition())
-                console.println("Masukin koordinate yang valid ya!");
-            else
-                shipTarget = GameController.checkIsHit(enemyFleet, position);
+                if (!position.isValidPosition())
+                    console.println("Coordinate Outside the playing field, you should try again!");
+                else
+                    shipTarget = GameController.checkIsHit(enemyFleet, position);
 
-            boolean isHit = (shipTarget != null);
-            if (isHit) {
-                ConsoleOut.beep();
+                boolean isHit = (shipTarget != null);
+                if (isHit) {
+                    ConsoleOut.beep();
 
-                // print boom to me
-                ConsoleOut.boom("enemy");
+                    // print boom to me
+                    ConsoleOut.boom("enemy");
 
-                if (shipTarget.isShink()) {
-                    console.setForegroundColor(Ansi.FColor.BLUE);
-                    console.println(String.format("YEACHHHHHHH: Enemy's %s was Sink", shipTarget.getName()));
+                    if (shipTarget.isShink()) {
+                        console.setForegroundColor(Ansi.FColor.BLUE);
+                        console.println(String.format("HOUREEEEEE: Enemy's %s was Sink", shipTarget.getName()));
+
+                        boolean isAllSink = true;
+                        for (Ship ship : myFleet) {
+                            if (!ship.isShink()) isAllSink = false;
+                        }
+
+                        if (isAllSink) {
+                            console.println("All enemy's ships was sank!");
+                        }
+                    }
                 }
-            }
 
-            console.println(isHit ? "Yeah ! Nice hit !" : "Miss");
+                console.println(isHit ? "Yeah ! Nice hit !" : "Miss");
 
-            position = getRandomPosition();
-            shipTarget = GameController.checkIsHit(myFleet, position);
-            isHit = (shipTarget != null);
-            console.println("");
-            console.println(String.format("Computer shoot in %s%s and %s", position.getColumn(), position.getRow(), isHit ? "hit your ship !" : "miss"));
-            if (isHit) {
-                ConsoleOut.beep();
+                position = getRandomPosition();
+                shipTarget = GameController.checkIsHit(myFleet, position);
+                isHit = (shipTarget != null);
+                console.println("");
+                console.println(String.format("Computer shoot in %s%s and %s", position.getColumn(), position.getRow(), isHit ? "hit your ship !" : "miss"));
+                if (isHit) {
+                    ConsoleOut.beep();
 
-                // print boom to me
-                ConsoleOut.boom("me");
+                    // print boom to me
+                    ConsoleOut.boom("me");
 
-                if (shipTarget.isShink()) {
-                    console.setForegroundColor(Ansi.FColor.RED);
-                    console.println(String.format("OHNOOOOOOO Your %s was Sink", shipTarget.getName()));
+                    if (shipTarget.isShink()) {
+                        console.setForegroundColor(Ansi.FColor.RED);
+                        console.println(String.format("OHNOOOOOOO Your %s was Sink", shipTarget.getName()));
+
+                        boolean isAllSink = true;
+                        for (Ship ship : myFleet) {
+                            if (!ship.isShink()) isAllSink = false;
+                        }
+
+                        if (isAllSink) {
+                            console.println("All your ships was sank!");
+                        }
+                    }
                 }
+            } catch (Exception ex) {
+                console.println("Please enter a valid coordinate (Game board has size from A to H and 1 to 8) e.g. A1");
             }
         } while (true);
     }
@@ -118,30 +140,34 @@ public class Main {
         console.println("Please position your fleet (Game board has size from A to H and 1 to 8) :");
 
         for (Ship ship : myFleet) {
+            boolean shipValid = false;
             do {
                 console.println("");
                 console.println(String.format("Please enter the head positions for the %s (size: %s)", ship.getName(), ship.getSize()));
                 console.println(String.format("Enter Head Position (i.e A3):"));
                 String positionInput = scanner.next();
-                Position position = parsePosition(positionInput);
+                try {
+                    Position position = parsePosition(positionInput);
 
-                if (position.isValidPosition()) {
-                    console.println("");
-                    console.println(String.format("Please enter the Position Direction for the %s (size: %s) - [H]orizontal / [V]ertical", ship.getName(), ship.getSize()));
-                    console.println(String.format("Enter direction (H/V):", ship.getSize()));
-                    String arahInput = scanner.next();
-                    Direction arah = Direction.valueOf(arahInput);
-                    ship.setUpPosition(position, arah);
+                    if (position.isValidPosition()) {
+                        console.println("");
+                        console.println(String.format("Please enter the Position Direction for the %s (size: %s) - [H]orizontal / [V]ertical", ship.getName(), ship.getSize()));
+                        console.println(String.format("Enter direction (H/V):", ship.getSize()));
+                        String arahInput = scanner.next();
+                        Direction arah = Direction.valueOf(arahInput);
+                        ship.setUpPosition(position, arah);
+                    }
+
+                    ConsoleOut.print(ship.getPositions());
+
+                    shipValid = GameController.isShipValid(ship);
+                    if (!shipValid) {
+                        console.println("Ship position is over outside of the Game Board!");
+                    }
+                } catch (Exception ex) {
+                    console.println("Please enter a valid position (Game board has size from A to H and 1 to 8) e.g. A1");
                 }
-
-                ConsoleOut.print(ship.getPositions());
-
-                if (!GameController.isShipValid(ship)) {
-                    console.println("Ship position is over outside of the Game Board!");
-                }
-
-            } while (!GameController.isShipValid(ship));
-
+            } while (!shipValid);
         }
 
     }
@@ -155,10 +181,10 @@ public class Main {
         enemyFleet.get(0).getPositions().add(new Position(Letter.B, 7));
         enemyFleet.get(0).getPositions().add(new Position(Letter.B, 8));
 
+        enemyFleet.get(1).getPositions().add(new Position(Letter.E, 5));
         enemyFleet.get(1).getPositions().add(new Position(Letter.E, 6));
         enemyFleet.get(1).getPositions().add(new Position(Letter.E, 7));
         enemyFleet.get(1).getPositions().add(new Position(Letter.E, 8));
-        enemyFleet.get(1).getPositions().add(new Position(Letter.E, 9));
 
         enemyFleet.get(2).getPositions().add(new Position(Letter.A, 3));
         enemyFleet.get(2).getPositions().add(new Position(Letter.B, 3));
