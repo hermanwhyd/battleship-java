@@ -2,7 +2,18 @@
 .idea/
 build/
 
+.setting/
+
+.project
+
 .DS_Store
 *.iml
 
 /out/
+
+
+.settings/
+console-app/.classpath
+console-app/.settings/
+game-controller/.classpath
+game-controller/.settings/
