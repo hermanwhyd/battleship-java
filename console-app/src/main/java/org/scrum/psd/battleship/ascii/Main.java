@@ -18,6 +18,7 @@ public class Main {
     private static List<Ship> enemyFleet;
     private static ColoredPrinter console;
     private static List<Position> listHitted = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         console = new ColoredPrinter.Builder(1, false).build();
@@ -27,15 +28,21 @@ public class Main {
 
         InitializeGame();
 
-        StartGame();
+        boolean playAgain = false;
+        do {
+            StartGame();
+            console.println("Do you want to play again? [Y/N]");
+            playAgain = scanner.next().equalsIgnoreCase("Y");
+        } while (playAgain);
     }
 
     private static void StartGame() {
-        Scanner scanner = new Scanner(System.in);
-    	
-        
         // print meriam
         ConsoleOut.meriam();
+
+        boolean isEnd = false;
+        boolean isAllEnemisSink = true;
+        boolean isAllYourShipSink = true;
 
         do {
             console.println("");
@@ -59,15 +66,15 @@ public class Main {
 
                     if (shipTarget.isShink()) {
                         console.setForegroundColor(Ansi.FColor.BLUE);
-                        console.println(String.format("HOUREEEEEE: Enemy's %s was Sink", shipTarget.getName()));
+                        console.println(String.format("HOUREEEEEE: Enemy's %s was sank", shipTarget.getName()));
 
-                        boolean isAllSink = true;
                         for (Ship ship : myFleet) {
-                            if (!ship.isShink()) isAllSink = false;
+                            if (!ship.isShink()) isAllYourShipSink = false;
                         }
 
-                        if (isAllSink) {
+                        if (isAllYourShipSink) {
                             console.println("All enemy's ships was sank!");
+                            isEnd = true;
                         }
                     }
                 }
@@ -87,22 +94,31 @@ public class Main {
 
                     if (shipTarget.isShink()) {
                         console.setForegroundColor(Ansi.FColor.RED);
-                        console.println(String.format("OHNOOOOOOO Your %s was Sink", shipTarget.getName()));
+                        console.println(String.format("OH NOOOOOOO Your %s was sank", shipTarget.getName()));
 
-                        boolean isAllSink = true;
                         for (Ship ship : myFleet) {
-                            if (!ship.isShink()) isAllSink = false;
+                            if (!ship.isShink()) isAllEnemisSink = false;
                         }
 
-                        if (isAllSink) {
+                        if (isAllEnemisSink) {
                             console.println("All your ships was sank!");
+                            isEnd = true;
                         }
                     }
                 }
             } catch (Exception ex) {
                 console.println("Please enter a valid coordinate (Game board has size from A to H and 1 to 8) e.g. A1");
             }
-        } while (true);
+
+        } while (!isEnd);
+
+        if (isAllYourShipSink && isAllEnemisSink) {
+            console.println("!!!!!!DRAW!!!!!!!");
+        } else if (isAllEnemisSink) {
+            console.println("!!!!!!YOU WON!!!!!");
+        } else {
+            console.println("!!!!!!YOU LOSE!!!!!");
+        }
     }
 
     protected static Position parsePosition(String input) {
@@ -176,26 +192,26 @@ public class Main {
     private static void InitializeEnemyFleet() {
         enemyFleet = GameController.initializeShips();
 
-        enemyFleet.get(0).getPositions().add(new Position(Letter.B, 4));
-        enemyFleet.get(0).getPositions().add(new Position(Letter.B, 5));
-        enemyFleet.get(0).getPositions().add(new Position(Letter.B, 6));
-        enemyFleet.get(0).getPositions().add(new Position(Letter.B, 7));
-        enemyFleet.get(0).getPositions().add(new Position(Letter.B, 8));
+//        enemyFleet.get(0).getPositions().add(new Position(Letter.B, 4));
+//        enemyFleet.get(0).getPositions().add(new Position(Letter.B, 5));
+//        enemyFleet.get(0).getPositions().add(new Position(Letter.B, 6));
+//        enemyFleet.get(0).getPositions().add(new Position(Letter.B, 7));
+//        enemyFleet.get(0).getPositions().add(new Position(Letter.B, 8));
+//
+//        enemyFleet.get(1).getPositions().add(new Position(Letter.E, 5));
+//        enemyFleet.get(1).getPositions().add(new Position(Letter.E, 6));
+//        enemyFleet.get(1).getPositions().add(new Position(Letter.E, 7));
+//        enemyFleet.get(1).getPositions().add(new Position(Letter.E, 8));
+//
+//        enemyFleet.get(2).getPositions().add(new Position(Letter.A, 3));
+//        enemyFleet.get(2).getPositions().add(new Position(Letter.B, 3));
+//        enemyFleet.get(2).getPositions().add(new Position(Letter.C, 3));
 
-        enemyFleet.get(1).getPositions().add(new Position(Letter.E, 5));
-        enemyFleet.get(1).getPositions().add(new Position(Letter.E, 6));
-        enemyFleet.get(1).getPositions().add(new Position(Letter.E, 7));
-        enemyFleet.get(1).getPositions().add(new Position(Letter.E, 8));
+        enemyFleet.get(0).getPositions().add(new Position(Letter.F, 8));
+        enemyFleet.get(0).getPositions().add(new Position(Letter.G, 8));
+        enemyFleet.get(0).getPositions().add(new Position(Letter.H, 8));
 
-        enemyFleet.get(2).getPositions().add(new Position(Letter.A, 3));
-        enemyFleet.get(2).getPositions().add(new Position(Letter.B, 3));
-        enemyFleet.get(2).getPositions().add(new Position(Letter.C, 3));
-
-        enemyFleet.get(3).getPositions().add(new Position(Letter.F, 8));
-        enemyFleet.get(3).getPositions().add(new Position(Letter.G, 8));
-        enemyFleet.get(3).getPositions().add(new Position(Letter.H, 8));
-
-        enemyFleet.get(4).getPositions().add(new Position(Letter.C, 5));
-        enemyFleet.get(4).getPositions().add(new Position(Letter.C, 6));
+        enemyFleet.get(1).getPositions().add(new Position(Letter.C, 5));
+        enemyFleet.get(1).getPositions().add(new Position(Letter.C, 6));
     }
 }
